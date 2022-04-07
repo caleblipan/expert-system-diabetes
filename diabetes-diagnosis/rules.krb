@@ -1,0 +1,46 @@
+# Blood sugar levels
+hypoglycemic
+    use blood_sugar(low)
+    when
+        questions.high_glycemic(False)
+
+hyperglycemic
+    use blood_sugar(high)
+    when
+        questions.high_glycemic(True)
+
+# Diabetic parent
+diabetic_parent
+    use parent_is_diabetic(True)
+    when
+	questions.diabetic_parent(True)
+
+not_diabetic_parent
+    use parent_is_diabetic(False)
+    when
+	questions.diabetic_parent(False)
+
+# RULES
+very_high_diabetic_risk
+    use is_diabetic("Your risk of diabetes is very high!")
+    when
+	blood_sugar(high)
+	parent_is_diabetic(True)
+
+high_diabetic_risk
+    use is_diabetic("Your risk of diabetes is high!")
+    when
+	blood_sugar(high)
+	parent_is_diabetic(False)
+
+low_diabetic_risk
+    use is_diabetic("Your risk of diabetes is low")
+    when
+	blood_sugar(low)
+	parent_is_diabetic(True)
+
+very_low_diabetic_risk
+    use is_diabetic("Your risk of diabetes is very low")
+    when
+	blood_sugar(low)
+	parent_is_diabetic(False)

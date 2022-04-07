@@ -1,0 +1,9 @@
+high_glycemic($ans)
+	Do you have high blood sugar level?
+	---
+	$ans = yn
+
+parent_is_diabetic($ans)
+	Do you have a diabetic parent?
+	---
+	$ans = yn
