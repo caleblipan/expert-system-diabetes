@@ -1,7 +1,35 @@
-high_glycemic($ans)
-	Do you have high blood sugar level?
+increased_thirst($ans)
+	\nHi there!
+	Before I test your blood sugar level, 
+	I would like to know if you have experienced some symptoms.
+	\n
+	Do you feel a little bit more thirsty lately?
 	---
 	$ans = yn
+
+increased_hunger($ans)
+	Do you feel like you want to eat more often?
+	---
+	$ans = yn
+
+increased_urination($ans)
+	Do you feel like you want to urinate more often?
+	---
+	$ans = yn
+
+high_glycemic($ans)
+	OK, that's enough.\nLet me conduct a blood glucose test on you.
+	I will take a blood sample from the vein in your arm using a small needle. 
+	After the needle is inserted, a small amount of blood will be collected into a test tube.
+	Be prepared for the sting though.
+
+	Here goes nothing...
+	
+	Ok, so it would seem your blood sugar is: 
+	---
+	$ans = integer(low=1-3 |
+			normal=4-10 |
+			high=11-15)
 
 diabetic_parent($ans)
 	Do you have a diabetic parent?

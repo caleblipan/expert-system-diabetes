@@ -1,46 +1,189 @@
+# Symptoms
+increased_thirst
+    foreach
+	questions.increased_thirst(True)
+    assert
+	facts.increased_thirst(True)
+
+no_increased_thirst
+    foreach
+	questions.increased_thirst(False)
+    assert
+	facts.increased_thirst(False)
+
+increased_hunger
+    foreach
+	questions.increased_hunger(True)
+    assert
+	facts.increased_hunger(True)
+
+no_increased_hunger
+    foreach
+	questions.increased_hunger(False)
+    assert
+	facts.increased_hunger(False)
+
+increased_urination
+    foreach
+	questions.increased_urination(True)
+    assert
+	facts.increased_urination(True)
+
+no_increased_urination
+    foreach
+	questions.increased_urination(False)
+    assert
+	facts.increased_urination(False)
+
+# END: Symptoms
+
+# Blood sugar risk
+high_blood_sugar_risk_1
+    foreach
+	facts.increased_thirst(True)
+	facts.increased_hunger(True)
+    assert
+	facts.blood_sugar_risk(high)
+
+high_blood_sugar_risk_2
+    foreach
+	facts.increased_thirst(True)
+	facts.increased_urination(True)
+    assert
+	facts.blood_sugar_risk(high)
+
+high_blood_sugar_risk_3
+    foreach
+	facts.increased_hunger(True)
+	facts.increased_urination(True)
+    assert
+	facts.blood_sugar_risk(high)
+
+low_blood_sugar_risk_1
+    foreach
+	facts.increased_thirst(False)
+	facts.increased_hunger(False)
+    assert
+	facts.blood_sugar_risk(low)
+
+low_blood_sugar_risk_2
+    foreach
+	facts.increased_thirst(False)
+	facts.increased_urination(False)
+    assert
+	facts.blood_sugar_risk(low)
+
+low_blood_sugar_risk_3
+    foreach
+	facts.increased_hunger(False)
+	facts.increased_urination(False)
+    assert
+	facts.blood_sugar_risk(low)
+# END: Blood sugar risk
+
 # Blood sugar levels
+# Based from the symptoms:
+normal_glycemic_1
+    foreach
+	facts.blood_sugar_risk(low)
+    assert
+	facts.blood_sugar(normal)
+
+normal_glycemic_2
+    foreach
+	facts.blood_sugar_risk(high)
+        questions.high_glycemic(normal)
+    assert
+	facts.blood_sugar(normal)
+
 hypoglycemic
-    use blood_sugar(low)
-    when
-        questions.high_glycemic(False)
+    foreach
+	facts.blood_sugar_risk(high)
+        questions.high_glycemic(low)
+    assert
+	facts.blood_sugar(low)
 
 hyperglycemic
-    use blood_sugar(high)
-    when
-        questions.high_glycemic(True)
+    foreach
+	facts.blood_sugar_risk(high)
+        questions.high_glycemic(high)
+    assert
+	facts.blood_sugar(high)
 
 # Diabetic parent
 diabetic_parent
-    use parent_is_diabetic(True)
-    when
+    foreach
 	questions.diabetic_parent(True)
+    assert
+	facts.parent_is_diabetic(True)
 
 not_diabetic_parent
-    use parent_is_diabetic(False)
-    when
+    foreach
 	questions.diabetic_parent(False)
+    assert
+	facts.parent_is_diabetic(False)
 
 # RULES
-very_high_diabetic_risk
-    use is_diabetic("Your risk of diabetes is very high!")
-    when
-	blood_sugar(high)
-	parent_is_diabetic(True)
+# If there are no signs of hypo/hyperglycemia
+no_diabetic_risk
+    foreach
+	facts.blood_sugar_risk(low)
+	facts.blood_sugar(normal)
+	facts.parent_is_diabetic(False)
+    assert
+        facts.is_diabetic("No need for a blood glucose test. You should be fine.")
+no_diabetic_risk_with_diabetic_parent
+    foreach
+	facts.blood_sugar_risk(low)
+	facts.blood_sugar(normal)
+	facts.parent_is_diabetic(True)
+    assert
+        facts.is_diabetic("No need for a blood glucose test. You should be fine.\nBe careful though. Your parents is diabetic.")
 
-high_diabetic_risk
-    use is_diabetic("Your risk of diabetes is high!")
-    when
-	blood_sugar(high)
-	parent_is_diabetic(False)
-
+# If blood sugar is normal
 low_diabetic_risk
-    use is_diabetic("Your risk of diabetes is low")
-    when
-	blood_sugar(low)
-	parent_is_diabetic(True)
+    foreach
+	facts.blood_sugar_risk(high)
+	facts.blood_sugar(normal)
+	facts.parent_is_diabetic(True)
+    assert
+        facts.is_diabetic("Your risk of diabetes is low")
 
 very_low_diabetic_risk
-    use is_diabetic("Your risk of diabetes is very low")
-    when
-	blood_sugar(low)
-	parent_is_diabetic(False)
+    foreach
+	facts.blood_sugar_risk(high)
+	facts.blood_sugar(normal)
+	facts.parent_is_diabetic(False)
+    assert
+        facts.is_diabetic("Your risk of diabetes is very low")
+
+# If the blood sugar is high
+very_high_diabetic_risk_high_glycemic
+    foreach
+	facts.blood_sugar(high)
+	facts.parent_is_diabetic(True)
+    assert
+        facts.is_diabetic("Your risk of diabetes is very high!")
+
+
+high_diabetic_risk_high_glycemic
+    foreach
+	facts.blood_sugar(high)
+	facts.parent_is_diabetic(False)
+    assert
+        facts.is_diabetic("Your risk of diabetes is high")
+
+# If blood sugar is low
+very_high_diabetic_risk_low_glycemic
+    foreach
+	facts.blood_sugar(low)
+	facts.parent_is_diabetic(True)
+    assert
+        facts.is_diabetic("Your risk of diabetes is very high!")
+
+high_diabetic_risk_low_glycemic
+    foreach
+	facts.blood_sugar(low)
+	facts.parent_is_diabetic(False)
+    assert
+        facts.is_diabetic("Your risk of diabetes is high")
