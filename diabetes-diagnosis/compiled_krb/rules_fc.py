@@ -95,6 +95,36 @@ def no_increased_urination(rule, context = None, index = None):
   finally:
     context.done()
 
+def increased_fatigue(rule, context = None, index = None):
+  engine = rule.rule_base.engine
+  if context is None: context = contexts.simple_context()
+  try:
+    with knowledge_base.Gen_once if index == 0 \
+             else engine.lookup('questions', 'increased_fatigue', context,
+                                rule.foreach_patterns(0)) \
+      as gen_0:
+      for dummy in gen_0:
+        engine.assert_('facts', 'increased_fatigue',
+                       (rule.pattern(0).as_data(context),)),
+        rule.rule_base.num_fc_rules_triggered += 1
+  finally:
+    context.done()
+
+def no_increased_fatigue(rule, context = None, index = None):
+  engine = rule.rule_base.engine
+  if context is None: context = contexts.simple_context()
+  try:
+    with knowledge_base.Gen_once if index == 0 \
+             else engine.lookup('questions', 'increased_fatigue', context,
+                                rule.foreach_patterns(0)) \
+      as gen_0:
+      for dummy in gen_0:
+        engine.assert_('facts', 'increased_fatigue',
+                       (rule.pattern(0).as_data(context),)),
+        rule.rule_base.num_fc_rules_triggered += 1
+  finally:
+    context.done()
+
 def high_blood_sugar_risk_1(rule, context = None, index = None):
   engine = rule.rule_base.engine
   if context is None: context = contexts.simple_context()
@@ -140,12 +170,72 @@ def high_blood_sugar_risk_3(rule, context = None, index = None):
   if context is None: context = contexts.simple_context()
   try:
     with knowledge_base.Gen_once if index == 0 \
+             else engine.lookup('facts', 'increased_thirst', context,
+                                rule.foreach_patterns(0)) \
+      as gen_0:
+      for dummy in gen_0:
+        with knowledge_base.Gen_once if index == 1 \
+                 else engine.lookup('facts', 'increased_fatigue', context,
+                                    rule.foreach_patterns(1)) \
+          as gen_1:
+          for dummy in gen_1:
+            engine.assert_('facts', 'blood_sugar_risk',
+                           (rule.pattern(0).as_data(context),)),
+            rule.rule_base.num_fc_rules_triggered += 1
+  finally:
+    context.done()
+
+def high_blood_sugar_risk_4(rule, context = None, index = None):
+  engine = rule.rule_base.engine
+  if context is None: context = contexts.simple_context()
+  try:
+    with knowledge_base.Gen_once if index == 0 \
              else engine.lookup('facts', 'increased_hunger', context,
                                 rule.foreach_patterns(0)) \
       as gen_0:
       for dummy in gen_0:
         with knowledge_base.Gen_once if index == 1 \
                  else engine.lookup('facts', 'increased_urination', context,
+                                    rule.foreach_patterns(1)) \
+          as gen_1:
+          for dummy in gen_1:
+            engine.assert_('facts', 'blood_sugar_risk',
+                           (rule.pattern(0).as_data(context),)),
+            rule.rule_base.num_fc_rules_triggered += 1
+  finally:
+    context.done()
+
+def high_blood_sugar_risk_5(rule, context = None, index = None):
+  engine = rule.rule_base.engine
+  if context is None: context = contexts.simple_context()
+  try:
+    with knowledge_base.Gen_once if index == 0 \
+             else engine.lookup('facts', 'increased_hunger', context,
+                                rule.foreach_patterns(0)) \
+      as gen_0:
+      for dummy in gen_0:
+        with knowledge_base.Gen_once if index == 1 \
+                 else engine.lookup('facts', 'increased_fatigue', context,
+                                    rule.foreach_patterns(1)) \
+          as gen_1:
+          for dummy in gen_1:
+            engine.assert_('facts', 'blood_sugar_risk',
+                           (rule.pattern(0).as_data(context),)),
+            rule.rule_base.num_fc_rules_triggered += 1
+  finally:
+    context.done()
+
+def high_blood_sugar_risk_6(rule, context = None, index = None):
+  engine = rule.rule_base.engine
+  if context is None: context = contexts.simple_context()
+  try:
+    with knowledge_base.Gen_once if index == 0 \
+             else engine.lookup('facts', 'increased_urination', context,
+                                rule.foreach_patterns(0)) \
+      as gen_0:
+      for dummy in gen_0:
+        with knowledge_base.Gen_once if index == 1 \
+                 else engine.lookup('facts', 'increased_fatigue', context,
                                     rule.foreach_patterns(1)) \
           as gen_1:
           for dummy in gen_1:
@@ -169,9 +259,14 @@ def low_blood_sugar_risk_1(rule, context = None, index = None):
                                     rule.foreach_patterns(1)) \
           as gen_1:
           for dummy in gen_1:
-            engine.assert_('facts', 'blood_sugar_risk',
-                           (rule.pattern(0).as_data(context),)),
-            rule.rule_base.num_fc_rules_triggered += 1
+            with knowledge_base.Gen_once if index == 2 \
+                     else engine.lookup('facts', 'increased_urination', context,
+                                        rule.foreach_patterns(2)) \
+              as gen_2:
+              for dummy in gen_2:
+                engine.assert_('facts', 'blood_sugar_risk',
+                               (rule.pattern(0).as_data(context),)),
+                rule.rule_base.num_fc_rules_triggered += 1
   finally:
     context.done()
 
@@ -185,17 +280,47 @@ def low_blood_sugar_risk_2(rule, context = None, index = None):
       as gen_0:
       for dummy in gen_0:
         with knowledge_base.Gen_once if index == 1 \
-                 else engine.lookup('facts', 'increased_urination', context,
+                 else engine.lookup('facts', 'increased_hunger', context,
                                     rule.foreach_patterns(1)) \
           as gen_1:
           for dummy in gen_1:
-            engine.assert_('facts', 'blood_sugar_risk',
-                           (rule.pattern(0).as_data(context),)),
-            rule.rule_base.num_fc_rules_triggered += 1
+            with knowledge_base.Gen_once if index == 2 \
+                     else engine.lookup('facts', 'increased_fatigue', context,
+                                        rule.foreach_patterns(2)) \
+              as gen_2:
+              for dummy in gen_2:
+                engine.assert_('facts', 'blood_sugar_risk',
+                               (rule.pattern(0).as_data(context),)),
+                rule.rule_base.num_fc_rules_triggered += 1
   finally:
     context.done()
 
 def low_blood_sugar_risk_3(rule, context = None, index = None):
+  engine = rule.rule_base.engine
+  if context is None: context = contexts.simple_context()
+  try:
+    with knowledge_base.Gen_once if index == 0 \
+             else engine.lookup('facts', 'increased_thirst', context,
+                                rule.foreach_patterns(0)) \
+      as gen_0:
+      for dummy in gen_0:
+        with knowledge_base.Gen_once if index == 1 \
+                 else engine.lookup('facts', 'increased_urination', context,
+                                    rule.foreach_patterns(1)) \
+          as gen_1:
+          for dummy in gen_1:
+            with knowledge_base.Gen_once if index == 2 \
+                     else engine.lookup('facts', 'increased_fatigue', context,
+                                        rule.foreach_patterns(2)) \
+              as gen_2:
+              for dummy in gen_2:
+                engine.assert_('facts', 'blood_sugar_risk',
+                               (rule.pattern(0).as_data(context),)),
+                rule.rule_base.num_fc_rules_triggered += 1
+  finally:
+    context.done()
+
+def low_blood_sugar_risk_4(rule, context = None, index = None):
   engine = rule.rule_base.engine
   if context is None: context = contexts.simple_context()
   try:
@@ -209,9 +334,14 @@ def low_blood_sugar_risk_3(rule, context = None, index = None):
                                     rule.foreach_patterns(1)) \
           as gen_1:
           for dummy in gen_1:
-            engine.assert_('facts', 'blood_sugar_risk',
-                           (rule.pattern(0).as_data(context),)),
-            rule.rule_base.num_fc_rules_triggered += 1
+            with knowledge_base.Gen_once if index == 2 \
+                     else engine.lookup('facts', 'increased_fatigue', context,
+                                        rule.foreach_patterns(2)) \
+              as gen_2:
+              for dummy in gen_2:
+                engine.assert_('facts', 'blood_sugar_risk',
+                               (rule.pattern(0).as_data(context),)),
+                rule.rule_base.num_fc_rules_triggered += 1
   finally:
     context.done()
 
@@ -240,7 +370,7 @@ def normal_glycemic_2(rule, context = None, index = None):
       as gen_0:
       for dummy in gen_0:
         with knowledge_base.Gen_once if index == 1 \
-                 else engine.lookup('questions', 'high_glycemic', context,
+                 else engine.lookup('questions', 'random_glucose_test', context,
                                     rule.foreach_patterns(1)) \
           as gen_1:
           for dummy in gen_1:
@@ -260,7 +390,27 @@ def hypoglycemic(rule, context = None, index = None):
       as gen_0:
       for dummy in gen_0:
         with knowledge_base.Gen_once if index == 1 \
-                 else engine.lookup('questions', 'high_glycemic', context,
+                 else engine.lookup('questions', 'random_glucose_test', context,
+                                    rule.foreach_patterns(1)) \
+          as gen_1:
+          for dummy in gen_1:
+            engine.assert_('facts', 'blood_sugar',
+                           (rule.pattern(0).as_data(context),)),
+            rule.rule_base.num_fc_rules_triggered += 1
+  finally:
+    context.done()
+
+def higher_than_normal(rule, context = None, index = None):
+  engine = rule.rule_base.engine
+  if context is None: context = contexts.simple_context()
+  try:
+    with knowledge_base.Gen_once if index == 0 \
+             else engine.lookup('facts', 'blood_sugar_risk', context,
+                                rule.foreach_patterns(0)) \
+      as gen_0:
+      for dummy in gen_0:
+        with knowledge_base.Gen_once if index == 1 \
+                 else engine.lookup('questions', 'random_glucose_test', context,
                                     rule.foreach_patterns(1)) \
           as gen_1:
           for dummy in gen_1:
@@ -280,11 +430,31 @@ def hyperglycemic(rule, context = None, index = None):
       as gen_0:
       for dummy in gen_0:
         with knowledge_base.Gen_once if index == 1 \
-                 else engine.lookup('questions', 'high_glycemic', context,
+                 else engine.lookup('questions', 'random_glucose_test', context,
                                     rule.foreach_patterns(1)) \
           as gen_1:
           for dummy in gen_1:
             engine.assert_('facts', 'blood_sugar',
+                           (rule.pattern(0).as_data(context),)),
+            rule.rule_base.num_fc_rules_triggered += 1
+  finally:
+    context.done()
+
+def confirmed_diabetic(rule, context = None, index = None):
+  engine = rule.rule_base.engine
+  if context is None: context = contexts.simple_context()
+  try:
+    with knowledge_base.Gen_once if index == 0 \
+             else engine.lookup('facts', 'blood_sugar_risk', context,
+                                rule.foreach_patterns(0)) \
+      as gen_0:
+      for dummy in gen_0:
+        with knowledge_base.Gen_once if index == 1 \
+                 else engine.lookup('facts', 'blood_sugar', context,
+                                    rule.foreach_patterns(1)) \
+          as gen_1:
+          for dummy in gen_1:
+            engine.assert_('facts', 'is_diabetic',
                            (rule.pattern(0).as_data(context),)),
             rule.rule_base.num_fc_rules_triggered += 1
   finally:
@@ -539,6 +709,18 @@ def populate(engine):
       False),),
     (pattern.pattern_literal(False),))
   
+  fc_rule.fc_rule('increased_fatigue', This_rule_base, increased_fatigue,
+    (('questions', 'increased_fatigue',
+      (pattern.pattern_literal(True),),
+      False),),
+    (pattern.pattern_literal(True),))
+  
+  fc_rule.fc_rule('no_increased_fatigue', This_rule_base, no_increased_fatigue,
+    (('questions', 'increased_fatigue',
+      (pattern.pattern_literal(False),),
+      False),),
+    (pattern.pattern_literal(False),))
+  
   fc_rule.fc_rule('high_blood_sugar_risk_1', This_rule_base, high_blood_sugar_risk_1,
     (('facts', 'increased_thirst',
       (pattern.pattern_literal(True),),
@@ -558,10 +740,37 @@ def populate(engine):
     (pattern.pattern_literal('high'),))
   
   fc_rule.fc_rule('high_blood_sugar_risk_3', This_rule_base, high_blood_sugar_risk_3,
+    (('facts', 'increased_thirst',
+      (pattern.pattern_literal(True),),
+      False),
+     ('facts', 'increased_fatigue',
+      (pattern.pattern_literal(True),),
+      False),),
+    (pattern.pattern_literal('high'),))
+  
+  fc_rule.fc_rule('high_blood_sugar_risk_4', This_rule_base, high_blood_sugar_risk_4,
     (('facts', 'increased_hunger',
       (pattern.pattern_literal(True),),
       False),
      ('facts', 'increased_urination',
+      (pattern.pattern_literal(True),),
+      False),),
+    (pattern.pattern_literal('high'),))
+  
+  fc_rule.fc_rule('high_blood_sugar_risk_5', This_rule_base, high_blood_sugar_risk_5,
+    (('facts', 'increased_hunger',
+      (pattern.pattern_literal(True),),
+      False),
+     ('facts', 'increased_fatigue',
+      (pattern.pattern_literal(True),),
+      False),),
+    (pattern.pattern_literal('high'),))
+  
+  fc_rule.fc_rule('high_blood_sugar_risk_6', This_rule_base, high_blood_sugar_risk_6,
+    (('facts', 'increased_urination',
+      (pattern.pattern_literal(True),),
+      False),
+     ('facts', 'increased_fatigue',
       (pattern.pattern_literal(True),),
       False),),
     (pattern.pattern_literal('high'),))
@@ -572,6 +781,9 @@ def populate(engine):
       False),
      ('facts', 'increased_hunger',
       (pattern.pattern_literal(False),),
+      False),
+     ('facts', 'increased_urination',
+      (pattern.pattern_literal(False),),
       False),),
     (pattern.pattern_literal('low'),))
   
@@ -579,16 +791,34 @@ def populate(engine):
     (('facts', 'increased_thirst',
       (pattern.pattern_literal(False),),
       False),
-     ('facts', 'increased_urination',
+     ('facts', 'increased_hunger',
+      (pattern.pattern_literal(False),),
+      False),
+     ('facts', 'increased_fatigue',
       (pattern.pattern_literal(False),),
       False),),
     (pattern.pattern_literal('low'),))
   
   fc_rule.fc_rule('low_blood_sugar_risk_3', This_rule_base, low_blood_sugar_risk_3,
+    (('facts', 'increased_thirst',
+      (pattern.pattern_literal(False),),
+      False),
+     ('facts', 'increased_urination',
+      (pattern.pattern_literal(False),),
+      False),
+     ('facts', 'increased_fatigue',
+      (pattern.pattern_literal(False),),
+      False),),
+    (pattern.pattern_literal('low'),))
+  
+  fc_rule.fc_rule('low_blood_sugar_risk_4', This_rule_base, low_blood_sugar_risk_4,
     (('facts', 'increased_hunger',
       (pattern.pattern_literal(False),),
       False),
      ('facts', 'increased_urination',
+      (pattern.pattern_literal(False),),
+      False),
+     ('facts', 'increased_fatigue',
       (pattern.pattern_literal(False),),
       False),),
     (pattern.pattern_literal('low'),))
@@ -603,7 +833,7 @@ def populate(engine):
     (('facts', 'blood_sugar_risk',
       (pattern.pattern_literal('high'),),
       False),
-     ('questions', 'high_glycemic',
+     ('questions', 'random_glucose_test',
       (pattern.pattern_literal('normal'),),
       False),),
     (pattern.pattern_literal('normal'),))
@@ -612,19 +842,37 @@ def populate(engine):
     (('facts', 'blood_sugar_risk',
       (pattern.pattern_literal('high'),),
       False),
-     ('questions', 'high_glycemic',
+     ('questions', 'random_glucose_test',
       (pattern.pattern_literal('low'),),
       False),),
     (pattern.pattern_literal('low'),))
+  
+  fc_rule.fc_rule('higher_than_normal', This_rule_base, higher_than_normal,
+    (('facts', 'blood_sugar_risk',
+      (pattern.pattern_literal('high'),),
+      False),
+     ('questions', 'random_glucose_test',
+      (pattern.pattern_literal('high'),),
+      False),),
+    (pattern.pattern_literal('high'),))
   
   fc_rule.fc_rule('hyperglycemic', This_rule_base, hyperglycemic,
     (('facts', 'blood_sugar_risk',
       (pattern.pattern_literal('high'),),
       False),
-     ('questions', 'high_glycemic',
-      (pattern.pattern_literal('high'),),
+     ('questions', 'random_glucose_test',
+      (pattern.pattern_literal('veryHigh'),),
       False),),
-    (pattern.pattern_literal('high'),))
+    (pattern.pattern_literal('veryHigh'),))
+  
+  fc_rule.fc_rule('confirmed_diabetic', This_rule_base, confirmed_diabetic,
+    (('facts', 'blood_sugar_risk',
+      (pattern.pattern_literal('high'),),
+      False),
+     ('facts', 'blood_sugar',
+      (pattern.pattern_literal('veryHigh'),),
+      False),),
+    (pattern.pattern_literal("Confirmed. You have diabetes.\nWe will give you insulin injections immediately."),))
   
   fc_rule.fc_rule('diabetic_parent', This_rule_base, diabetic_parent,
     (('questions', 'diabetic_parent',
@@ -660,7 +908,7 @@ def populate(engine):
      ('facts', 'parent_is_diabetic',
       (pattern.pattern_literal(True),),
       False),),
-    (pattern.pattern_literal("No need for a blood glucose test. You should be fine.\nBe careful though. Your parents is diabetic."),))
+    (pattern.pattern_literal("No need for a blood glucose test. You should be fine.\nBe careful though. One of your parents is diabetic."),))
   
   fc_rule.fc_rule('low_diabetic_risk', This_rule_base, low_diabetic_risk,
     (('facts', 'blood_sugar_risk',
@@ -672,7 +920,7 @@ def populate(engine):
      ('facts', 'parent_is_diabetic',
       (pattern.pattern_literal(True),),
       False),),
-    (pattern.pattern_literal("Your risk of diabetes is low"),))
+    (pattern.pattern_literal("Looks like your blood sugar level is OK, despite the symptoms you have shown.\nYour risk of diabetes is low.\nBe careful though. One of your parents is diabetic."),))
   
   fc_rule.fc_rule('very_low_diabetic_risk', This_rule_base, very_low_diabetic_risk,
     (('facts', 'blood_sugar_risk',
@@ -684,7 +932,7 @@ def populate(engine):
      ('facts', 'parent_is_diabetic',
       (pattern.pattern_literal(False),),
       False),),
-    (pattern.pattern_literal("Your risk of diabetes is very low"),))
+    (pattern.pattern_literal("Your risk of diabetes is very low, despite the symptoms you have shown.\nYour blood sugar level is normal and none of your parents is diabetic."),))
   
   fc_rule.fc_rule('very_high_diabetic_risk_high_glycemic', This_rule_base, very_high_diabetic_risk_high_glycemic,
     (('facts', 'blood_sugar',
@@ -693,7 +941,7 @@ def populate(engine):
      ('facts', 'parent_is_diabetic',
       (pattern.pattern_literal(True),),
       False),),
-    (pattern.pattern_literal("Your risk of diabetes is very high!"),))
+    (pattern.pattern_literal("I'm sorry, but you currently have prediabetes.\nYour risk of diabetes is very high!"),))
   
   fc_rule.fc_rule('high_diabetic_risk_high_glycemic', This_rule_base, high_diabetic_risk_high_glycemic,
     (('facts', 'blood_sugar',
@@ -702,7 +950,7 @@ def populate(engine):
      ('facts', 'parent_is_diabetic',
       (pattern.pattern_literal(False),),
       False),),
-    (pattern.pattern_literal("Your risk of diabetes is high"),))
+    (pattern.pattern_literal("I'm sorry, but you currently have prediabetes.\nYour risk of diabetes is high"),))
   
   fc_rule.fc_rule('very_high_diabetic_risk_low_glycemic', This_rule_base, very_high_diabetic_risk_low_glycemic,
     (('facts', 'blood_sugar',
@@ -711,7 +959,7 @@ def populate(engine):
      ('facts', 'parent_is_diabetic',
       (pattern.pattern_literal(True),),
       False),),
-    (pattern.pattern_literal("Your risk of diabetes is very high!"),))
+    (pattern.pattern_literal("I'm sorry, but you currently have prediabetes.\nYour risk of diabetes is very high!"),))
   
   fc_rule.fc_rule('high_diabetic_risk_low_glycemic', This_rule_base, high_diabetic_risk_low_glycemic,
     (('facts', 'blood_sugar',
@@ -720,7 +968,7 @@ def populate(engine):
      ('facts', 'parent_is_diabetic',
       (pattern.pattern_literal(False),),
       False),),
-    (pattern.pattern_literal("Your risk of diabetes is high"),))
+    (pattern.pattern_literal("I'm sorry, but you currently have prediabetes.\nYour risk of diabetes is high"),))
 
 
 Krb_filename = '..\\rules.krb'
@@ -737,65 +985,91 @@ Krb_lineno_map = (
     ((77, 78), (30, 30)),
     ((87, 91), (34, 34)),
     ((92, 93), (36, 36)),
-    ((102, 106), (43, 43)),
-    ((107, 111), (44, 44)),
-    ((112, 113), (46, 46)),
-    ((122, 126), (50, 50)),
-    ((127, 131), (51, 51)),
-    ((132, 133), (53, 53)),
-    ((142, 146), (57, 57)),
-    ((147, 151), (58, 58)),
-    ((152, 153), (60, 60)),
-    ((162, 166), (64, 64)),
-    ((167, 171), (65, 65)),
-    ((172, 173), (67, 67)),
-    ((182, 186), (71, 71)),
-    ((187, 191), (72, 72)),
-    ((192, 193), (74, 74)),
-    ((202, 206), (78, 78)),
-    ((207, 211), (79, 79)),
-    ((212, 213), (81, 81)),
-    ((222, 226), (88, 88)),
-    ((227, 228), (90, 90)),
-    ((237, 241), (94, 94)),
-    ((242, 246), (95, 95)),
-    ((247, 248), (97, 97)),
-    ((257, 261), (101, 101)),
-    ((262, 266), (102, 102)),
-    ((267, 268), (104, 104)),
-    ((277, 281), (108, 108)),
-    ((282, 286), (109, 109)),
-    ((287, 288), (111, 111)),
-    ((297, 301), (116, 116)),
-    ((302, 303), (118, 118)),
-    ((312, 316), (122, 122)),
-    ((317, 318), (124, 124)),
-    ((327, 331), (130, 130)),
-    ((332, 336), (131, 131)),
-    ((337, 341), (132, 132)),
-    ((342, 343), (134, 134)),
-    ((352, 356), (137, 137)),
-    ((357, 361), (138, 138)),
-    ((362, 366), (139, 139)),
-    ((367, 368), (141, 141)),
-    ((377, 381), (146, 146)),
-    ((382, 386), (147, 147)),
-    ((387, 391), (148, 148)),
-    ((392, 393), (150, 150)),
-    ((402, 406), (154, 154)),
-    ((407, 411), (155, 155)),
-    ((412, 416), (156, 156)),
-    ((417, 418), (158, 158)),
-    ((427, 431), (163, 163)),
-    ((432, 436), (164, 164)),
-    ((437, 438), (166, 166)),
-    ((447, 451), (171, 171)),
-    ((452, 456), (172, 172)),
-    ((457, 458), (174, 174)),
-    ((467, 471), (179, 179)),
-    ((472, 476), (180, 180)),
-    ((477, 478), (182, 182)),
-    ((487, 491), (186, 186)),
-    ((492, 496), (187, 187)),
-    ((497, 498), (189, 189)),
+    ((102, 106), (40, 40)),
+    ((107, 108), (42, 42)),
+    ((117, 121), (46, 46)),
+    ((122, 123), (48, 48)),
+    ((132, 136), (55, 55)),
+    ((137, 141), (56, 56)),
+    ((142, 143), (58, 58)),
+    ((152, 156), (62, 62)),
+    ((157, 161), (63, 63)),
+    ((162, 163), (65, 65)),
+    ((172, 176), (69, 69)),
+    ((177, 181), (70, 70)),
+    ((182, 183), (72, 72)),
+    ((192, 196), (76, 76)),
+    ((197, 201), (77, 77)),
+    ((202, 203), (79, 79)),
+    ((212, 216), (83, 83)),
+    ((217, 221), (84, 84)),
+    ((222, 223), (86, 86)),
+    ((232, 236), (90, 90)),
+    ((237, 241), (91, 91)),
+    ((242, 243), (93, 93)),
+    ((252, 256), (97, 97)),
+    ((257, 261), (98, 98)),
+    ((262, 266), (99, 99)),
+    ((267, 268), (101, 101)),
+    ((277, 281), (105, 105)),
+    ((282, 286), (106, 106)),
+    ((287, 291), (107, 107)),
+    ((292, 293), (109, 109)),
+    ((302, 306), (113, 113)),
+    ((307, 311), (114, 114)),
+    ((312, 316), (115, 115)),
+    ((317, 318), (117, 117)),
+    ((327, 331), (121, 121)),
+    ((332, 336), (122, 122)),
+    ((337, 341), (123, 123)),
+    ((342, 343), (125, 125)),
+    ((352, 356), (132, 132)),
+    ((357, 358), (134, 134)),
+    ((367, 371), (138, 138)),
+    ((372, 376), (139, 139)),
+    ((377, 378), (141, 141)),
+    ((387, 391), (145, 145)),
+    ((392, 396), (146, 146)),
+    ((397, 398), (148, 148)),
+    ((407, 411), (152, 152)),
+    ((412, 416), (153, 153)),
+    ((417, 418), (155, 155)),
+    ((427, 431), (159, 159)),
+    ((432, 436), (160, 160)),
+    ((437, 438), (162, 162)),
+    ((447, 451), (167, 167)),
+    ((452, 456), (168, 168)),
+    ((457, 458), (170, 170)),
+    ((467, 471), (175, 175)),
+    ((472, 473), (177, 177)),
+    ((482, 486), (181, 181)),
+    ((487, 488), (183, 183)),
+    ((497, 501), (189, 189)),
+    ((502, 506), (190, 190)),
+    ((507, 511), (191, 191)),
+    ((512, 513), (193, 193)),
+    ((522, 526), (197, 197)),
+    ((527, 531), (198, 198)),
+    ((532, 536), (199, 199)),
+    ((537, 538), (201, 201)),
+    ((547, 551), (206, 206)),
+    ((552, 556), (207, 207)),
+    ((557, 561), (208, 208)),
+    ((562, 563), (210, 210)),
+    ((572, 576), (214, 214)),
+    ((577, 581), (215, 215)),
+    ((582, 586), (216, 216)),
+    ((587, 588), (218, 218)),
+    ((597, 601), (223, 223)),
+    ((602, 606), (224, 224)),
+    ((607, 608), (226, 226)),
+    ((617, 621), (231, 231)),
+    ((622, 626), (232, 232)),
+    ((627, 628), (234, 234)),
+    ((637, 641), (239, 239)),
+    ((642, 646), (240, 240)),
+    ((647, 648), (242, 242)),
+    ((657, 661), (246, 246)),
+    ((662, 666), (247, 247)),
+    ((667, 668), (249, 249)),
 )

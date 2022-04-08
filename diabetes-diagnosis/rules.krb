@@ -35,6 +35,18 @@ no_increased_urination
     assert
 	facts.increased_urination(False)
 
+increased_fatigue
+    foreach
+	questions.increased_fatigue(True)
+    assert
+	facts.increased_fatigue(True)
+
+no_increased_fatigue
+    foreach
+	questions.increased_fatigue(False)
+    assert
+	facts.increased_fatigue(False)
+
 # END: Symptoms
 
 # Blood sugar risk
@@ -54,8 +66,29 @@ high_blood_sugar_risk_2
 
 high_blood_sugar_risk_3
     foreach
+	facts.increased_thirst(True)
+	facts.increased_fatigue(True)
+    assert
+	facts.blood_sugar_risk(high)
+
+high_blood_sugar_risk_4
+    foreach
 	facts.increased_hunger(True)
 	facts.increased_urination(True)
+    assert
+	facts.blood_sugar_risk(high)
+
+high_blood_sugar_risk_5
+    foreach
+	facts.increased_hunger(True)
+	facts.increased_fatigue(True)
+    assert
+	facts.blood_sugar_risk(high)
+
+high_blood_sugar_risk_6
+    foreach
+	facts.increased_urination(True)
+	facts.increased_fatigue(True)
     assert
 	facts.blood_sugar_risk(high)
 
@@ -63,20 +96,31 @@ low_blood_sugar_risk_1
     foreach
 	facts.increased_thirst(False)
 	facts.increased_hunger(False)
+	facts.increased_urination(False)
     assert
 	facts.blood_sugar_risk(low)
 
 low_blood_sugar_risk_2
     foreach
 	facts.increased_thirst(False)
-	facts.increased_urination(False)
+	facts.increased_hunger(False)
+	facts.increased_fatigue(False)
     assert
 	facts.blood_sugar_risk(low)
 
 low_blood_sugar_risk_3
     foreach
+	facts.increased_thirst(False)
+	facts.increased_urination(False)
+	facts.increased_fatigue(False)
+    assert
+	facts.blood_sugar_risk(low)
+
+low_blood_sugar_risk_4
+    foreach
 	facts.increased_hunger(False)
 	facts.increased_urination(False)
+	facts.increased_fatigue(False)
     assert
 	facts.blood_sugar_risk(low)
 # END: Blood sugar risk
@@ -92,23 +136,38 @@ normal_glycemic_1
 normal_glycemic_2
     foreach
 	facts.blood_sugar_risk(high)
-        questions.high_glycemic(normal)
+        questions.random_glucose_test(normal)
     assert
 	facts.blood_sugar(normal)
 
 hypoglycemic
     foreach
 	facts.blood_sugar_risk(high)
-        questions.high_glycemic(low)
+        questions.random_glucose_test(low)
     assert
 	facts.blood_sugar(low)
+
+higher_than_normal
+    foreach
+	facts.blood_sugar_risk(high)
+        questions.random_glucose_test(high)
+    assert
+	facts.blood_sugar(high)
 
 hyperglycemic
     foreach
 	facts.blood_sugar_risk(high)
-        questions.high_glycemic(high)
+        questions.random_glucose_test(veryHigh)
     assert
-	facts.blood_sugar(high)
+	facts.blood_sugar(veryHigh)
+
+# If the blood sugar level is alarming
+confirmed_diabetic
+    foreach
+	facts.blood_sugar_risk(high)
+	facts.blood_sugar(veryHigh)
+    assert
+	facts.is_diabetic("Confirmed. You have diabetes.\nWe will give you insulin injections immediately.")
 
 # Diabetic parent
 diabetic_parent
@@ -132,13 +191,14 @@ no_diabetic_risk
 	facts.parent_is_diabetic(False)
     assert
         facts.is_diabetic("No need for a blood glucose test. You should be fine.")
+
 no_diabetic_risk_with_diabetic_parent
     foreach
 	facts.blood_sugar_risk(low)
 	facts.blood_sugar(normal)
 	facts.parent_is_diabetic(True)
     assert
-        facts.is_diabetic("No need for a blood glucose test. You should be fine.\nBe careful though. Your parents is diabetic.")
+        facts.is_diabetic("No need for a blood glucose test. You should be fine.\nBe careful though. One of your parents is diabetic.")
 
 # If blood sugar is normal
 low_diabetic_risk
@@ -147,7 +207,7 @@ low_diabetic_risk
 	facts.blood_sugar(normal)
 	facts.parent_is_diabetic(True)
     assert
-        facts.is_diabetic("Your risk of diabetes is low")
+        facts.is_diabetic("Looks like your blood sugar level is OK, despite the symptoms you have shown.\nYour risk of diabetes is low.\nBe careful though. One of your parents is diabetic.")
 
 very_low_diabetic_risk
     foreach
@@ -155,7 +215,7 @@ very_low_diabetic_risk
 	facts.blood_sugar(normal)
 	facts.parent_is_diabetic(False)
     assert
-        facts.is_diabetic("Your risk of diabetes is very low")
+        facts.is_diabetic("Your risk of diabetes is very low, despite the symptoms you have shown.\nYour blood sugar level is normal and none of your parents is diabetic.")
 
 # If the blood sugar is high
 very_high_diabetic_risk_high_glycemic
@@ -163,7 +223,7 @@ very_high_diabetic_risk_high_glycemic
 	facts.blood_sugar(high)
 	facts.parent_is_diabetic(True)
     assert
-        facts.is_diabetic("Your risk of diabetes is very high!")
+        facts.is_diabetic("I'm sorry, but you currently have prediabetes.\nYour risk of diabetes is very high!")
 
 
 high_diabetic_risk_high_glycemic
@@ -171,7 +231,7 @@ high_diabetic_risk_high_glycemic
 	facts.blood_sugar(high)
 	facts.parent_is_diabetic(False)
     assert
-        facts.is_diabetic("Your risk of diabetes is high")
+        facts.is_diabetic("I'm sorry, but you currently have prediabetes.\nYour risk of diabetes is high")
 
 # If blood sugar is low
 very_high_diabetic_risk_low_glycemic
@@ -179,11 +239,12 @@ very_high_diabetic_risk_low_glycemic
 	facts.blood_sugar(low)
 	facts.parent_is_diabetic(True)
     assert
-        facts.is_diabetic("Your risk of diabetes is very high!")
+        facts.is_diabetic("I'm sorry, but you currently have prediabetes.\nYour risk of diabetes is very high!")
 
 high_diabetic_risk_low_glycemic
     foreach
 	facts.blood_sugar(low)
 	facts.parent_is_diabetic(False)
     assert
-        facts.is_diabetic("Your risk of diabetes is high")
+        facts.is_diabetic("I'm sorry, but you currently have prediabetes.\nYour risk of diabetes is high")
+

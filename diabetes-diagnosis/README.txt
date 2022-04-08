@@ -1,5 +1,6 @@
+From the symptoms that the patient has now, we want to know if the person has no diabetes, pre-diabetes, or diabetes.
 1. Firstly we check if the children has signs of low blood sugar before we directly test his blood sugar levels.
-2. These are all questions (at least 2 of these should be answered as 'yes' to count as a major sign of diabetes):
+2. These are all questions (at least 2 of these should be answered as 'yes' to count as a major sign of diabetes)/:
 	1. Do you have a diabetic parent?
 	2. Have you experienced increased thirst?
 	3. Have you experienced increased hunger?

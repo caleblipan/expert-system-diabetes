@@ -17,7 +17,7 @@ increased_urination($ans)
 	---
 	$ans = yn
 
-high_glycemic($ans)
+random_glucose_test($ans)
 	OK, that's enough.\nLet me conduct a blood glucose test on you.
 	I will take a blood sample from the vein in your arm using a small needle. 
 	After the needle is inserted, a small amount of blood will be collected into a test tube.
@@ -27,11 +27,12 @@ high_glycemic($ans)
 	
 	Ok, so it would seem your blood sugar is: 
 	---
-	$ans = integer(low=1-3 |
-			normal=4-10 |
-			high=11-15)
+	$ans = integer(low=-79 |
+			normal=80-139 |
+			high= 140-199 |
+			veryHigh=200-)
 
 diabetic_parent($ans)
-	Do you have a diabetic parent?
+	Anyways, do you have a diabetic parent?
 	---
 	$ans = yn
