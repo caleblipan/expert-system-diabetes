@@ -6,7 +6,7 @@ from pyke import knowledge_engine, krb_traceback, goal
 
 engine = knowledge_engine.engine(__file__)
 
-def bc_test_questions():
+def start_diagnosis():
 
     engine.reset()
 
